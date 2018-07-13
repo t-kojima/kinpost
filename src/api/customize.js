@@ -1,7 +1,6 @@
 /* eslint-disable no-console, no-param-reassign */
 
 const axios = require('axios');
-
 const green = text => `\u001b[32m${text}\u001b[0m`;
 
 exports.get = async (auth, app) => {
@@ -24,7 +23,7 @@ exports.put = async (auth, body) => {
   body.revision = -1;
 
   await axios({
-    method: 'get',
+    method: 'put',
     url: `https://${auth.domain}/k/v1/preview/app/customize.json`,
     headers: {
       'X-Cybozu-Authorization': Buffer.from(
