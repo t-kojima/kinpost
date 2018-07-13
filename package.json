@@ -1,0 +1,35 @@
+{
+  "name": "upload-app",
+  "version": "1.0.0",
+  "description": "Upload custom JavaScript file to Kintone.",
+  "main": "index.js",
+  "repository": "git@github.com:t-kojima/.git",
+  "author": "t-kojima <t-kojima@hokuichi-e.com>",
+  "license": "MIT",
+  "keywords": [
+    "kintone"
+  ],
+  "homepage": "https://github.com/t-kojima/move-app",
+  "bugs": {
+    "url": "https://github.com/t-kojima/move-app/issues"
+  },
+  "engines": {
+    "node": ">=8.9"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "eslint": "^5.1.0",
+    "eslint-config-airbnb": "^17.0.0",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-plugin-import": "^2.13.0",
+    "eslint-plugin-jsx-a11y": "^6.1.0",
+    "eslint-plugin-prettier": "^2.6.2",
+    "eslint-plugin-react": "^7.10.0",
+    "mocha": "^5.2.0",
+    "prettier": "^1.13.7"
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "form-data": "^2.3.2"
+  }
+}
