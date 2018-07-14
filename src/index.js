@@ -1,6 +1,5 @@
 const customize = require('./api/customize');
 const fileapi = require('./api/file');
-const deploy = require('./api/deploy');
 const { loadFile } = require('./file');
 
 const green = text => `\u001b[32m${text}\u001b[0m`;
@@ -40,7 +39,6 @@ module.exports = async params => {
     schema.app = params.app;
     schema.revision = -1;
     await customize.put(auth, schema);
-    await deploy(auth, params.app);
     console.info(green('File Upload Successfully.'));
   } catch (e) {
     console.error(
