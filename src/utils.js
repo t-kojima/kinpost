@@ -13,13 +13,11 @@ function* filenames(schema) {
   yield* files.map(file => file.file.name);
 }
 
-module.exports = (params, schema) => {
-  if (!params.overwrite) {
-    for (const filename of [...filenames(schema)]) {
-      if (params.files.some(file => basename(file.path) === filename)) {
-        throw Error(`Already exists ${filename}`);
-      }
+exports.exists = (schema, path) => {
+  for (const filename of [...filenames(schema)]) {
+    if (basename(path) === filename) {
+      return true;
     }
   }
-  return true;
+  return false;
 };

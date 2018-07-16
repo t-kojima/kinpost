@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
-const { assert, expect } = require('chai');
-const validate = require('../src/validate');
+const { assert } = require('chai');
+const { exists } = require('../src/utils');
 
 describe('validation', () => {
   const schema = {
@@ -43,46 +43,15 @@ describe('validation', () => {
     revision: '15',
   };
 
-  describe('other file in params', () => {
-    const params = {
-      overwrite: false,
-      files: [
-        {
-          path: './hoge/fuga/piyo.js',
-        },
-      ],
-    };
-    it('success', () => {
-      assert.isTrue(validate(params, schema));
-    });
+  it('is exists', () => {
+    assert.isTrue(exists(schema, './hoge/fuga/mobile.js'));
   });
 
-  describe('same file in params', () => {
-    const params = {
-      overwrite: false,
-      files: [
-        {
-          path: './hoge/fuga/mobile.js',
-        },
-      ],
-    };
-
-    it('duplicate', () => {
-      expect(() => validate(params, schema)).to.throw(
-        'Already exists mobile.js'
-      );
-    });
-
-    it('not check', () => {
-      params.overwrite = true;
-      assert.isTrue(validate(params, schema));
-    });
+  it('is exists', () => {
+    assert.isTrue(exists(schema, './sample.js'));
   });
 
-  // it('missing file', async () => {
-  //   expect(() => loadFile('./test/fixture/hoge2.js')).to.throw(
-  //     Error,
-  //     'no such file or directory'
-  //   );
-  // });
+  it('is not exists', () => {
+    assert.isFalse(exists(schema, './hoge/fuga/fuga.js'));
+  });
 });

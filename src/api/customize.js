@@ -2,8 +2,6 @@
 
 const axios = require('axios');
 
-const green = text => `\u001b[32m${text}\u001b[0m`;
-
 exports.get = async (auth, app) => {
   const response = await axios({
     method: 'get',
@@ -35,5 +33,4 @@ exports.put = async (auth, body) => {
     },
     data: body,
   });
-  console.info(`${green('Upload Successfully.')}`);
 };

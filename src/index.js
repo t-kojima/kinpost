@@ -3,7 +3,7 @@
 const customize = require('./api/customize');
 const fileApi = require('./api/file');
 const deploy = require('./api/deploy');
-const validate = require('./validate');
+const { exists } = require('./utils');
 const { loadFile } = require('./file');
 
 const green = text => `\u001b[32m${text}\u001b[0m`;
@@ -16,8 +16,6 @@ const red = text => `\u001b[31m${text}\u001b[0m`;
  * @param {string} param.username ユーザー名
  * @param {string} param.password パスワード
  * @param {Array.Object} param.files ファイル情報
- * @param {string} [param.platform=desktop] desktop or mobile
- * @param {boolean} [param.overwrite=false] 上書き有無
  */
 module.exports = async params => {
   try {
@@ -26,16 +24,20 @@ module.exports = async params => {
       username: params.username,
       password: params.password,
     };
-    params.overwrite = params.overwrite || false;
 
     const schema = await customize.get(auth, params.app);
-    validate(params, schema);
 
     for (const fileParam of params.files) {
       const fileObj = await loadFile(fileParam.path, fileParam.encoding);
       const fileKey = await fileApi.upload(auth, fileObj);
-      // TODO remove FILE
-      schema.desktop.js.push({
+      const platform = fileParam.platform || 'desktop';
+      const type = fileParam.type || 'js';
+      if (exists(schema, fileParam.path)) {
+        schema[platform][type] = schema[platform][type].filter(
+          item => item.type === 'FILE' && item.file.name !== fileObj.name
+        );
+      }
+      schema[platform][type].push({
         type: 'FILE',
         file: {
           fileKey,
