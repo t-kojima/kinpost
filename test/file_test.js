@@ -1,6 +1,10 @@
 /* eslint-disable no-undef */
+const chai = require('chai');
 const { assert, expect } = require('chai');
+const chaiAsPromised = require('chai-as-promised');
 const { loadFile } = require('../src/file');
+
+chai.use(chaiAsPromised);
 
 describe('file load', () => {
   it('load success', async () => {
@@ -9,10 +13,5 @@ describe('file load', () => {
     assert.equal(file.size, 279);
   });
 
-  // it('missing file', async () => {
-  //   expect(() => loadFile('./test/fixture/hoge2.js')).to.throw(
-  //     Error,
-  //     'no such file or directory'
-  //   );
-  // });
+  it('throw error', () => expect(loadFile('./missing.txt')).to.be.rejected);
 });
