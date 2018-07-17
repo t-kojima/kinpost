@@ -1,23 +1,17 @@
-/* eslint-disable no-restricted-syntax */
-
-const R = require('ramda');
-const { basename } = require('path');
-
-function* filenames(schema) {
-  const items = R.xprod(['desktop', 'mobile'], ['js', 'css']).map(
-    a => schema[a[0]][a[1]]
-  );
-  const files = []
-    .concat(...items)
-    .filter(item => item && item.type === 'FILE');
-  yield* files.map(file => file.file.name);
-}
-
-exports.exists = (schema, path) => {
-  for (const filename of [...filenames(schema)]) {
-    if (basename(path) === filename) {
-      return true;
+exports.validate = params => {
+  params.files.forEach(file => {
+    if (
+      file.platform &&
+      !['desktop', 'mobile'].some(p => p === file.platform)
+    ) {
+      throw Error(`Invalid params [platform: ${file.platform}]`);
     }
-  }
-  return false;
+    if (file.type && !['js', 'css'].some(t => t === file.type)) {
+      throw Error(`Invalid params [platform: ${file.type}]`);
+    }
+    if (file.platform === 'mobile' && file.type === 'css') {
+      throw Error('Invalid params [platform: mobile and type: css]');
+    }
+  });
+  return true;
 };
