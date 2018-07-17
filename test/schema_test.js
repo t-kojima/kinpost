@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 const { assert } = require('chai');
-const Schema = require('../src/schema');
+const Schema = require('../lib/schema');
 
 describe('Schema', () => {
   let schema;

@@ -1,17 +1,17 @@
 {
-  "name": "upload-app",
+  "name": "kinpost",
   "version": "1.0.0",
-  "description": "Upload custom JavaScript file to Kintone.",
-  "main": "index.js",
-  "repository": "git@github.com:t-kojima/.git",
+  "description": "Custom JavaScript file upload to Kintone.",
+  "main": "lib/index.js",
+  "repository": "git@github.com:t-kojima/kinpost.git",
   "author": "t-kojima <t-kojima@hokuichi-e.com>",
   "license": "MIT",
   "keywords": [
     "kintone"
   ],
-  "homepage": "https://github.com/t-kojima/move-app",
+  "homepage": "https://github.com/t-kojima/kinpost",
   "bugs": {
-    "url": "https://github.com/t-kojima/move-app/issues"
+    "url": "https://github.com/t-kojima/kinpost/issues"
   },
   "engines": {
     "node": ">=8.9"
@@ -31,7 +31,13 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
-    "form-data": "^2.3.2",
-    "ramda": "^0.25.0"
+    "form-data": "^2.3.2"
+  },
+  "files": [
+    "index.js",
+    "lib"
+  ],
+  "scripts": {
+    "test": "mocha --recursive test"
   }
 }

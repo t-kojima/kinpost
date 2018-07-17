@@ -2,7 +2,7 @@
 const chai = require('chai');
 const { assert, expect } = require('chai');
 const chaiAsPromised = require('chai-as-promised');
-const File = require('../src/file');
+const File = require('../lib/file');
 
 chai.use(chaiAsPromised);
 

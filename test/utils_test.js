@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 const { assert, expect } = require('chai');
-const { validate } = require('../src/utils');
+const { validate } = require('../lib/utils');
 
 describe('validation', () => {
   it('return true when default', () => {
