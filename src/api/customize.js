@@ -1,5 +1,3 @@
-/* eslint-disable no-console, no-param-reassign */
-
 const axios = require('axios');
 
 exports.get = async (auth, app) => {
@@ -19,8 +17,6 @@ exports.get = async (auth, app) => {
 };
 
 exports.put = async (auth, body) => {
-  body.revision = -1;
-
   await axios({
     method: 'put',
     url: `https://${auth.domain}/k/v1/preview/app/customize.json`,
