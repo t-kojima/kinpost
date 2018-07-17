@@ -1,54 +1,60 @@
-/* eslint-disable no-await-in-loop, no-console, no-restricted-syntax, no-param-reassign */
+/* eslint-disable no-await-in-loop, no-restricted-syntax */
 
 const customize = require('./api/customize');
 const fileApi = require('./api/file');
 const deploy = require('./api/deploy');
-const { exists } = require('./utils');
-const { loadFile } = require('./file');
+const Schema = require('./schema');
+const File = require('./file');
+const { validate } = require('./utils');
+// const { loadFile } = require('./file');
 
 const green = text => `\u001b[32m${text}\u001b[0m`;
 const red = text => `\u001b[31m${text}\u001b[0m`;
 
+const getSchema = async (auth, app) => {
+  const schema = await customize.get(auth, app);
+  return new Schema(schema, app);
+};
+
+const getFiles = files => files.map(param => new File(param));
+
+const getFileKeys = async (auth, files) => {
+  const obj = {};
+  for (const file of files) {
+    obj[file.name] = await fileApi.upload(auth, file.content, file.name);
+  }
+  return obj;
+};
+
+const deploySchema = async (auth, schema) => {
+  await customize.put(auth, schema.body);
+  await deploy(auth, schema.app, Number(schema.revision) + 1);
+};
+
 /**
- * カスタムJavaScriptファイルをアップロードする
- * @param {string} param.domain kintoneサブドメイン
- * @param {number} param.app 対象アプリID
- * @param {string} param.username ユーザー名
- * @param {string} param.password パスワード
- * @param {Array.Object} param.files ファイル情報
+ * Custom JavaScript file upload to kintone.
+ * @param {string} param.domain kintone sub domain
+ * @param {number} param.app target kintone app id
+ * @param {string} param.username kintone login username
+ * @param {string} param.password kintone login password
+ * @param {Array.Object} param.files file infomations
  */
 module.exports = async params => {
   try {
+    validate(params);
+
     const auth = {
       domain: params.domain,
       username: params.username,
       password: params.password,
     };
 
-    const schema = await customize.get(auth, params.app);
+    const schema = await getSchema(auth, params.app);
+    const files = getFiles(params.files);
+    const keys = await getFileKeys(auth, files);
+    schema.update(files, keys);
 
-    for (const fileParam of params.files) {
-      const fileObj = await loadFile(fileParam.path, fileParam.encoding);
-      const fileKey = await fileApi.upload(auth, fileObj);
-      const platform = fileParam.platform || 'desktop';
-      const type = fileParam.type || 'js';
-      if (exists(schema, fileParam.path)) {
-        schema[platform][type] = schema[platform][type].filter(
-          item => item.type === 'FILE' && item.file.name !== fileObj.name
-        );
-      }
-      schema[platform][type].push({
-        type: 'FILE',
-        file: {
-          fileKey,
-          name: fileObj.name,
-          size: fileObj.size,
-        },
-      });
-      schema.app = params.app;
-      await customize.put(auth, schema);
-    }
-    await deploy(auth, params.app, schema.revision);
+    await deploySchema(auth, schema);
     console.info(green('File Upload Successfully.'));
   } catch (e) {
     if (e.response) {
