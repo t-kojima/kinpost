@@ -1,9 +1,9 @@
 const axios = require('axios');
 const FormData = require('form-data');
 
-exports.upload = async (auth, file) => {
+exports.upload = async (auth, content, name) => {
   const form = new FormData();
-  form.append('file', file.content, file.name);
+  form.append('file', content, name);
 
   const response = await axios({
     method: 'post',

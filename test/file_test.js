@@ -2,16 +2,63 @@
 const chai = require('chai');
 const { assert, expect } = require('chai');
 const chaiAsPromised = require('chai-as-promised');
-const { loadFile } = require('../src/file');
+const File = require('../src/file');
 
 chai.use(chaiAsPromised);
 
-describe('file load', () => {
-  it('load success', async () => {
-    const file = await loadFile('./test/fixture/hoge.js');
+describe('File', () => {
+  it('load js file at desktop', () => {
+    const params = {
+      path: './test/fixture/hoge.js',
+    };
+    const file = new File(params);
     assert.equal(file.name, 'hoge.js');
     assert.equal(file.size, 279);
+    assert.equal(file.platform, 'desktop');
+    assert.equal(file.type, 'js');
   });
 
-  it('throw error', () => expect(loadFile('./missing.txt')).to.be.rejected);
+  it('load js file at mobile', () => {
+    const params = {
+      path: './test/fixture/hoge.js',
+      platform: 'mobile',
+    };
+    const file = new File(params);
+    assert.equal(file.name, 'hoge.js');
+    assert.equal(file.size, 279);
+    assert.equal(file.platform, 'mobile');
+    assert.equal(file.type, 'js');
+  });
+
+  it('load css file at desktop', () => {
+    const params = {
+      path: './test/fixture/hoge.js',
+      type: 'css',
+    };
+    const file = new File(params);
+    assert.equal(file.name, 'hoge.js');
+    assert.equal(file.size, 279);
+    assert.equal(file.platform, 'desktop');
+    assert.equal(file.type, 'css');
+  });
+
+  it('missing type and missing platform', () => {
+    const params = {
+      path: './test/fixture/hoge.js',
+      platform: 'xbox',
+      type: 'html',
+    };
+    const file = new File(params);
+    assert.equal(file.name, 'hoge.js');
+    assert.equal(file.size, 279);
+    assert.equal(file.platform, 'xbox');
+    assert.equal(file.type, 'html');
+  });
+
+  it('throw an error', () => {
+    const params = {
+      path: './misisng.txt',
+    };
+    expect(() => new File(params)).to.throw();
+  });
 });
