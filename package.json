@@ -1,7 +1,7 @@
 {
   "name": "kinpost",
   "version": "1.0.0",
-  "description": "Custom JavaScript file upload to Kintone.",
+  "description": "Kinpost is custom JavaScript file uploader for Kintone.",
   "main": "lib/index.js",
   "repository": "git@github.com:t-kojima/kinpost.git",
   "author": "t-kojima <t-kojima@hokuichi-e.com>",
@@ -18,7 +18,6 @@
   },
   "devDependencies": {
     "chai": "^4.1.2",
-    "chai-as-promised": "^7.1.1",
     "eslint": "^5.1.0",
     "eslint-config-airbnb": "^17.0.0",
     "eslint-config-prettier": "^2.9.0",
@@ -34,7 +33,6 @@
     "form-data": "^2.3.2"
   },
   "files": [
-    "index.js",
     "lib"
   ],
   "scripts": {

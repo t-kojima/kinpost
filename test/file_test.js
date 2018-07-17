@@ -1,10 +1,6 @@
 /* eslint-disable no-undef */
-const chai = require('chai');
 const { assert, expect } = require('chai');
-const chaiAsPromised = require('chai-as-promised');
 const File = require('../lib/file');
-
-chai.use(chaiAsPromised);
 
 describe('File', () => {
   it('load js file at desktop', () => {
