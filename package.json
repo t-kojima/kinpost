@@ -1,6 +1,6 @@
 {
   "name": "kinpost",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Kinpost is custom JavaScript file uploader for Kintone.",
   "main": "lib/index.js",
   "repository": "git@github.com:t-kojima/kinpost.git",
