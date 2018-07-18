@@ -22,7 +22,8 @@ yarn add --dev kinpost
 
 ## Usage
 
-Append any files to custom JavaScript (or CSS) form, if the same filename exists, overwrite an old file.
+- Append any files to custom JavaScript (or CSS) form, if the same filename exists, overwrite an old file.
+- File uploads to Testing Environment. Use `deploy` option, if you need upload to Production Environment.
 
 ```js
 const kinpost = require('kinpost');
@@ -37,18 +38,20 @@ kinpost({
     { path: './js/mobile.js', platform: 'mobile' },
     { path: './css/global.css', type: 'css' },
   ],
+  deploy: true,
 });
 ```
 
 ## Parameters
 
-| name     | type   | required | description                               |
-| -------- | ------ | -------- | ----------------------------------------- |
-| domain   | string | yes      | Your kintone sub domain name              |
-| app      | number | yes      | Target kintone app ID                     |
-| username | string | yes      | Login user name                           |
-| password | string | yes      | Login user's password                     |
-| files    | array  | yes      | File config list, please see next section |
+| name     | type    | required | default | description                               |
+| -------- | ------- | -------- | ------- | ----------------------------------------- |
+| domain   | string  | yes      |         | Your kintone sub domain name              |
+| app      | number  | yes      |         | Target kintone app ID                     |
+| username | string  | yes      |         | Login user name                           |
+| password | string  | yes      |         | Login user's password                     |
+| files    | array   | yes      |         | File config list, please see next section |
+| deploy   | boolean | no       | false   | Deploy to Production Environment          |
 
 ### File Config
 
