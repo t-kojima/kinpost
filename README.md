@@ -23,7 +23,7 @@ yarn add --dev kinpost
 ## Usage
 
 - Append any files to custom JavaScript (or CSS) form, if the same filename exists, overwrite an old file.
-- File uploads to Testing Environment. Use `deploy` option, if you need upload to Production Environment.
+- File uploads to Testing Environment. If you need upload to Production Environment, try use `deploy` option.
 
 ```js
 const kinpost = require('kinpost');
